@@ -1,0 +1,29 @@
+{% extends 'main/index.html' %}
+{% load static %}
+{% block title %}
+	Факультеты
+{% endblock %}
+{% block content %}
+	<aside id="fh5co-hero">
+		<div class="flexslider">
+			<ul class="slides">
+			<li style="background-image: url({% static 'images/img_bg_4.jpg' %});">
+				<div class="overlay-gradient"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center slider-text">
+							<div class="slider-text-inner">
+								<h1 class="heading-section">Подразделения</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			</ul>
+		</div>
+	</aside>
+
+	
+	{% include 'includes/faculties.html' %}
+	{% include 'includes/register.html' %}
+{% endblock %}

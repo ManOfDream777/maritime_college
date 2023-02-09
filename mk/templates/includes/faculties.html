@@ -1,0 +1,26 @@
+{% load static %}
+<div id="fh5co-course">
+        <div class="container">
+            <div class="row animate-box">
+                <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+                    <h2>Подразделения</h2>
+                    <p>Доступные программы обучения. Подразделения.</p>
+                </div>
+            </div>
+            <div class="row">
+                {% for faculty in faculties %}
+                    <div class="col-md-6 animate-box">
+                        <div class="course">
+                            <a href="{% url 'contact' %}" class="course-img" style="{% if not faculty.image %} background-image: url({% static 'images/project-1.jpg' %}); {% else %} background-image: url({{ faculty.image.url }}); {% endif %}">
+                            </a>
+                            <div class="desc">
+                                <h3>{{ faculty.name }}</h3>
+                                <p style="word-break: break-word;">{{ faculty.description }}</p>
+                                <span>Успейте начать обучение своей мечты за {{ faculty.price_per_year }}₽ / год</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>

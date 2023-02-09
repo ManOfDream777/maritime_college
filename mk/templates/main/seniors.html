@@ -1,0 +1,51 @@
+{% extends 'main/index.html' %}
+{% load static %}
+{% block title %}
+	Руководство
+{% endblock %}
+{% block content %}
+	<aside id="fh5co-hero">
+		<div class="flexslider">
+			<ul class="slides">
+			<li style="background-image: url({% static 'images/img_bg_4.jpg' %});">
+				<div class="overlay-gradient"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center slider-text">
+							<div class="slider-text-inner">
+								<h1 class="heading-section">Руководство</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			</ul>
+		</div>
+	</aside>
+
+	<div id="fh5co-staff">
+		<div class="container">
+			<ul class="content__header-menu">
+				{% for rank in ranks %}
+					<li class="content__header-category">
+						<button data-rank-id="{{ rank.id }}" class="content__header-btn {% if rank.importancy == 1 %} is-active {% endif %}">{{ rank.name }}</button>
+					</li>
+				{% endfor %}
+			</ul>
+			<div class="row">
+				{% for senior in seniors %}
+					<div class="col-md-3 text-center">
+						<div class="staff">
+							<div class="staff-img" style="background-image: url('{{ senior.photo.url }}');">
+							</div>
+							<span>{{ senior.senior }}</span>
+							<h3>{{ senior.senior }}</h3>
+							<p>{{ senior.description }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% include 'includes/register.html' %}
+{% endblock %}

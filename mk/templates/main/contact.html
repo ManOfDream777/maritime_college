@@ -1,0 +1,156 @@
+{% extends 'main/index.html' %}
+{% load static %}
+{% block title %}
+	Контакты
+{% endblock %}
+{% block extracss %}
+	<link rel="stylesheet" href="{% static 'main/css/sweetalert.min.css' %}">
+{% endblock %}
+{% block content %}
+	<aside id="fh5co-hero">
+		<div class="flexslider">
+			<ul class="slides">
+			<li style="background-image: url(images/img_bg_4.jpg);">
+				<div class="overlay-gradient"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center slider-text">
+							<div class="slider-text-inner">
+								<h1 class="heading-section">Оставить заявку</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			</ul>
+		</div>
+	</aside>
+
+	<div id="fh5co-contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 col-md-push-1 animate-box">
+					
+					<div class="fh5co-contact-info">
+						<h3>Контактная информация</h3>
+						<ul>
+							<li class="address">пр. Ленина, 93, Новороссийск, <br>Краснодарский край, 353918</li>
+							<li class="phone"><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li class="email"><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-md-6 animate-box">
+					<h3>Оставьте заявку и мы Вам перезвоним</h3>
+					{% csrf_token %}
+					<form action="" class="contact_form">
+						<div class="row form-group">
+							<div class="col-md-6">
+								<input type="text" id="first_name" class="form-control" placeholder="Ваше имя">
+								<span class="error_msg"></span>
+							</div>
+							<div class="col-md-6">
+								<input type="text" id="last_name" class="form-control" placeholder="Ваша фамилия">
+								<span class="error_msg"></span>
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="text" id="email" class="form-control" placeholder="Ваш email">
+								<span class="error_msg"></span>
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="text" id="subject" class="form-control" placeholder="Тема сообщения">
+								<span class="error_msg"></span>
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<textarea name="body" id="body" cols="30" rows="10" class="form-control" placeholder="Сообщение"></textarea>
+								<span class="error_msg"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary"> Отправить </button>
+						</div>
+
+					</form>		
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div id="map" class="fh5co-map">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11346.92469877545!2d37.7923991!3d44.6842691!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x400181c5f469d346!2z0JPQvtGB0YPQtNCw0YDRgdGC0LLQtdC90L3Ri9C5INC80L7RgNGB0LrQvtC5INGD0L3QuNCy0LXRgNGB0LjRgtC10YIg0LjQvNC10L3QuCDQsNC00LzQuNGA0LDQu9CwINCkLtCkLiDQo9GI0LDQutC-0LLQsA!5e0!3m2!1sru!2sru!4v1673457585120!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+	</div>
+{% endblock %}
+
+{% block extrajs %}
+	<script src="{% static 'main/js/sweetalert.min.js' %}"></script>
+	<script>
+
+		var form_fields = form => {
+			const result = {}
+			const inputs = form.querySelectorAll('input')
+			for (let i = 0; i < inputs.length; i++){
+				const input = inputs[i]
+				result[input.id] = input.value
+			}
+			const textarea = form.querySelector('textarea')
+
+			result[textarea.id] = textarea.value
+
+			console.log(result);
+			return result
+		}
+
+		const form = document.querySelector('form.contact_form')
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault()
+			fetch('/api/contact_create/', {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=utf-8',
+					'X-CSRFToken': form.parentNode.querySelector('input[name="csrfmiddlewaretoken"]').value,
+				},
+				body: JSON.stringify(form_fields(form))
+			}).then(response => {
+				form.querySelectorAll('span.error_msg').forEach(span => {
+					span.textContent = ''
+				})
+				if (response.status == 201){
+					Swal.fire({
+						title: 'Ваша заявка успешно отправлена',
+						icon: 'success',
+						timer: 2000,
+						willClose: () => {
+							window.location.reload()
+						}
+					})
+				}else{
+					return response.json().then(data => {
+						console.log(data);
+						for (let i = 0; i < Object.keys(data.errors).length; i++) {
+							const key = Object.keys(data.errors)[i]
+							const text = data.errors[key][0]
+							console.log(key, text);
+							if (key == 'body'){
+								form.querySelector(`textarea[id=${key}]`).parentNode.querySelector('span.error_msg').textContent = text
+							}else{
+								form.querySelector(`input[id=${key}]`).parentNode.querySelector('span.error_msg').textContent = text
+							}
+						}
+					})
+				}
+			})
+		})
+	</script>
+{% endblock %}

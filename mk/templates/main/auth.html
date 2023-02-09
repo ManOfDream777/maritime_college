@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/sweetalert.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
+		{% csrf_token %}
+			<div class="signup">
+				<form method="post">
+					<label class="label" for="chk" aria-hidden="true">Регистрация</label>
+					<input type="text" name="last_name" placeholder="Фамилия" maxlength="256" required="">
+					<input type="text" name="first_name" placeholder="Имя" maxlength="256" required="">
+					<input type="text" name="middle_name" placeholder="Отчество" maxlength="256" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+					<div class="select">
+						<select id="standard-select0">
+								<option value="null">Выберите пол</option>
+								<option value="M">Мужской</option>
+								<option value="F">Женский</option>
+						</select>
+						<div class="gender" style="text-align: center; ">
+							<span style="color:white;" gender ></span>
+						</div>
+					</div>
+					<input type="password" name="pswd1" placeholder="Пароль" required="">
+					<input type="password" name="pswd2" placeholder="Пароль еще раз" required="">
+					<div class="pswd2" style="text-align: center; ">
+						<span style="color:white;" pswd2 ></span>
+					</div>
+					<span class="focus"></span>
+					<button type="submit">Регистрация</button>
+					<a class="back_index" href="{% url 'index' %}"> <i class="bi bi-arrow-left"></i> Вернуться на главную</a>
+				</form>
+			</div>
+
+			<div class="login">
+				<form method="post">
+					<label style="padding-top: 10px;" class="label" for="chk" aria-hidden="true">Войти</label>
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<div style="text-align: center;">
+						<span class="errors"></span>
+					</div>
+					<button type="submit">Войти</button>
+					<a class="back_index reverse_color" href="{% url 'index' %}"> <i class="bi bi-arrow-left"></i> Вернуться на главную</a>
+
+				</form>
+			</div>
+	</div>
+	<div style="display: none;" class="extra_form_data">
+		<div class="select">
+			<div class="faculty">
+				<label for="standard-select1">Факультет</label>
+				<select id="standard-select1">
+					{% for faculty in faculties %}
+						<option value="{{ faculty.id }}">{{ faculty.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="study_group">
+				<label for="standard-select2">Группа</label>
+				<select id="standard-select2">
+					{% for group in study_groups %}
+						<option value="{{ group.correct_group_number }}">{{ group.correct_group_number }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="educ_type">
+				<label for="standard-select3">Форма обучения</label>
+				<select id="standard-select3">
+					{% for type in types_of_education %}
+						<option value="{{ type.0 }}">{{ type.1 }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="admission">
+				<label for="admission">Дата поступления</label>
+				<input type="text" id="admission" placeholder="Дата поступления">
+			</div>
+			<div class="birth_place">
+				<label for="birth_place">Место рождения</label>
+				<input type="text" placeholder="Страна, город" id="birth_place">
+			</div>
+		</div>
+	</div>
+	<script src="https://npmcdn.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <script src="{% static 'js/sweetalert.min.js' %}"></script>
+    <script src="{% static 'js/auth.js' %}"></script>
+</body>
+</html>

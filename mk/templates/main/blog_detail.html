@@ -1,0 +1,38 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+	{{ blog.title }}
+{% endblock %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% block content %}
+    <div id="fh5co-course">
+        <div class="container">
+            <div style="width: 100%;" class="col-md-6 animate-box">
+                <span>
+                    <a class="blog_img" href="">
+                        <img style="width: 100%; border-radius: 10px;" src="{{ blog.first_image }}" alt="">
+                    </a>
+                </span>
+                <h2>{{ blog.title }}</h2>
+                <p>{{ blog.content }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    {{ blog.show_remaining_images|json_script:"image_paths" }}
+    <script>
+        var gallery = JSON.parse(document.querySelector('#image_paths').textContent)
+        document.querySelector('.blog_img').addEventListener('click', (e) => {
+            e.preventDefault()
+            Fancybox.show(gallery, {});
+        })
+    </script>
+{% endblock %}

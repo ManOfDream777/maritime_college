@@ -1,0 +1,36 @@
+<nav class="fh5co-nav" role="navigation">
+    <div class="top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2">
+                    <div id="fh5co-logo"><a href="{% url 'index' %}"><i class="icon-study"></i>МК<span>.</span></a></div>
+                </div>
+                <div class="col-xs-10 text-right menu-1">
+                    <ul>
+                        <li><a href="{% url 'index' %}">Главная</a></li>
+                        <li><a href="{% url 'faculties' %}">Подразделения</a></li>
+                        <li><a href="{% url 'seniors' %}">Руководство</a></li>
+                        <li><a href="{% url 'about' %}">О нас</a></li>
+                        <li class="has-dropdown">
+                            <a href="{% url 'blog' %}">Спорт &amp; Общественная жизнь</a>
+                            <ul class="dropdown">
+                                {% for category in categories %}
+                                    <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'contact' %}">Контакты</a></li>
+                        {% if request.user.is_authenticated %}
+                        <li class="btn-cta">
+                                <small style="padding: 0 15px;" class="student_name">{{ request.user.get_extra_full_name }}</small>
+                                <a onclick="fetch('/api/logout').then(response => {window.location = '/'})" href="#"><span>Выйти</span></a>
+                            </li>
+                        {% else %}
+                            <li class="btn-cta"><a href="{% url 'auth' %}"><span>Зарегистрироваться</span></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

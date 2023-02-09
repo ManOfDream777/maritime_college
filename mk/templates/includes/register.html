@@ -1,0 +1,15 @@
+{% load static %}
+<div id="fh5co-register" style="background-image: url({% static 'images/img_bg_2.jpg' %});">
+<!-- Заявка на учебу в приемную комиссию -->
+    <div class="overlay"></div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 animate-box">
+            <div class="date-counter text-center">
+                <h2>Оставьте заявку на поступление и мы Вам перезвоним!</h2>
+                <div class="simply-countdown simply-countdown-one"></div>
+                <p><strong>Набор абитуриентов до ...</strong></p>
+                <p><a href="{% url 'contact' %}" class="btn btn-primary btn-lg btn-reg">Оставить заявку!</a></p>
+            </div>
+        </div>
+    </div>
+</div>
