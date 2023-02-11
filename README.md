@@ -14,7 +14,7 @@
 ## Installation and start
 
 ```bash
-  https://github.com/Urodec777/maritime_college.git
+git clone https://github.com/Urodec777/maritime_college.git
 ```
 Next step is creating venv
 ```bash
