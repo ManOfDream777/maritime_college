@@ -64,7 +64,7 @@ Enjoy :blush:
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `marker` (send with headers request) | `string` | **Required**. sign up |
+| `marker` (send with headers request) | `string` | **Required**. =sign up |
 | `first_name`      | `string` | **Required**. First name |
 | `last_name`      | `string` | **Required**. Last name|
 | `middle_name`      | `string` | **Required**. Middle name |
@@ -83,7 +83,7 @@ Enjoy :blush:
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `marker` (send with headers request) | `string` | **Required**. login |
+| `marker` (send with headers request) | `string` | **Required**. =login |
 | `email`      | `email` | **Required**. Email |
 | `password`      | `string` | **Required**. Password|
 
